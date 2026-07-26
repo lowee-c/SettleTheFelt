@@ -1,6 +1,5 @@
 import type { Screen } from '../types';
 import type { Theme } from '../hooks/useTheme';
-import ChipBadge from './ChipBadge';
 
 interface AppHeaderProps {
   screen: Screen;
