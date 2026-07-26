@@ -1,0 +1,146 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Felt (default) theme — a night-table green with a walnut rail and gold chips */
+  --felt: #123b2e;
+  --felt-deep: #0a271e;
+  --card: #fbf6eb;
+  --ink: #201c15;
+  --ink-soft: #6b6455;
+  --gold: #c9a227;
+  --gold-deep: #8a6a12;
+  --red: #c52d1d;
+  --dark-red: #220300;
+  --win: #2e8f6b;
+  --loss: #c1483b;
+  --rail: #3b2a22;
+  --line: rgba(251, 246, 235, 0.14);
+}
+
+[data-theme='day'] {
+  /* Day theme — a sunlit card-room: same cast, lighter room */
+  --felt: #e8ddc3;
+  --felt-deep: #dccfab;
+  --card: #fffdf8;
+  --ink: #241f16;
+  --ink-soft: #7a7362;
+  --gold: #a97a0e;
+  --gold-deep: #7a5808;
+  --win: #1f7a58;
+  --loss: #a83b2f;
+  --rail: #ceb98b;
+  --line: rgba(36, 31, 22, 0.12);
+}
+
+html {
+  color-scheme: dark;
+}
+[data-theme='day'] {
+  color-scheme: light;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  background-color: var(--felt);
+  color: var(--card);
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+::selection {
+  background: var(--gold);
+  color: var(--felt-deep);
+}
+
+/* Felt texture: a very subtle radial vignette + diagonal weave, done with gradients only */
+.felt-texture {
+  background-image:
+    radial-gradient(1200px 600px at 15% -10%, rgba(255, 255, 255, 0.05), transparent 60%),
+    repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.015) 0px, rgba(255, 255, 255, 0.015) 2px, transparent 2px, transparent 6px),
+    linear-gradient(180deg, var(--felt) 0%, var(--felt-deep) 100%);
+}
+
+.suit-divider {
+  background-image: radial-gradient(circle, var(--line) 1.5px, transparent 1.5px);
+  background-size: 10px 10px;
+  animation: dot-drift 3s linear infinite;
+}
+
+@keyframes dot-drift {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    /* Moves exactly one full tile (10px) diagonally — down and to the left —
+       so the loop is seamless with no visible jump. */
+    background-position: -10px 10px;
+  }
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  body {
+    background: white !important;
+    color: black !important;
+  }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+.btn-sparkle {
+  position: relative;
+}
+
+.btn-sparkle::after {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: inherit;
+  border: 1px solid var(--gold);
+  opacity: 0;
+  pointer-events: none;
+  animation: sparkle-pulse 6s ease-in-out infinite;
+}
+
+@keyframes sparkle-pulse {
+  0%,
+  85% {
+    opacity: 0;
+    box-shadow: 0 0 0 0 transparent;
+  }
+  90% {
+    opacity: 1;
+    box-shadow: 0 0 4px 2px var(--gold);
+  }
+  100% {
+    opacity: 0;
+    box-shadow: 0 0 0 0 transparent;
+  }
+}
+
+.btn-lift {
+  transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
+}
+
+.btn-lift:hover {
+  transform: translateY(-2px) scale(1.02);
+}
+
+.btn-lift:active {
+  transform: translateY(0) scale(0.97);
+  transition-duration: 0.05s;
+}
