@@ -25,7 +25,7 @@ export default function AppHeader({ screen, theme, onToggleTheme, onNewGame, has
         {/* Top row: logo/title on the left, theme toggle pinned top-right */}
         <div className="flex items-start justify-between gap-4">
           <div className="flex items-center gap-3">
-            <img src="/favicon.png" alt="Settle The Felt" className="h-10 w-10" />
+            <img src={`${import.meta.env.BASE_URL}favicon.png`} alt="Settle The Felt" className="h-10 w-10" />
             <div>
               <p className="font-display text-xl font-semibold leading-none text-card">Settle The Felt</p>
               <p className="mt-1 text-xs uppercase tracking-[0.18em] text-ink-soft">A Poker settlement calculator</p>
