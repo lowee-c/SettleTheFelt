@@ -169,7 +169,3 @@ decimal dollars — repeated clicks land on exact amounts instead of drifting.
 ## Credits
 
 Developed by **lowee-c**.
-
-## License
-
-MIT — do whatever you'd like with it.
