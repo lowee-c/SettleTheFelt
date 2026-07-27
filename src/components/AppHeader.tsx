@@ -1,5 +1,6 @@
 import type { Screen } from '../types';
 import type { Theme } from '../hooks/useTheme';
+import { MoonIcon, SunIcon, NoSymbolIcon, BanknotesIcon, ArrowUpCircleIcon, ClipboardDocumentCheckIcon } from '@heroicons/react/24/solid';
 
 interface AppHeaderProps {
   screen: Screen;
@@ -9,10 +10,10 @@ interface AppHeaderProps {
   hasPlayers: boolean;
 }
 
-const steps: { id: Screen; label: string }[] = [
-  { id: 'setup', label: '1 - Buy in' },
-  { id: 'cashout', label: '2 - Cash out' },
-  { id: 'settlement', label: '3 - Settle up' },
+const steps: { id: Screen; label: string; icon: React.ComponentType<{ className?: string }> }[] = [
+  { id: 'setup', label: 'Buy in', icon: BanknotesIcon },
+  { id: 'cashout', label: 'Cash out', icon: ArrowUpCircleIcon },
+  { id: 'settlement', label: 'Settle up', icon: ClipboardDocumentCheckIcon },
 ];
 
 export default function AppHeader({ screen, theme, onToggleTheme, onNewGame, hasPlayers }: AppHeaderProps) {
@@ -37,19 +38,30 @@ export default function AppHeader({ screen, theme, onToggleTheme, onNewGame, has
               <button
                 type="button"
                 onClick={onNewGame}
-                className="rounded-full border border-loss/60 px-3 py-2 text-xs font-medium text-loss transition hover:bg-loss/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-loss"
+                className="flex items-center gap-1 rounded-full bg-loss px-3 py-2 text-xs font-medium text-card/80 shadow-chip transition hover:brightness-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-loss"
               >
-                New Game
+                <NoSymbolIcon className="h-4 w-4" />
+                Reset
               </button>
             )}
 
             <button
               type="button"
               onClick={onToggleTheme}
-              className="rounded-full border border-line px-3 py-2 text-xs font-medium text-card/80 transition hover:border-gold hover:text-gold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold"
+              className="flex items-center gap-1 rounded-full border border-line px-3 py-2 text-xs font-medium text-card/80 transition hover:border-gold hover:text-gold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold"
               aria-label={theme === 'felt' ? 'Switch to day theme' : 'Switch to felt theme'}
             >
-              {theme === 'felt' ? '🟢 Felt' : '☀️ Day'}
+              {theme === 'felt' ? (
+                <>
+                  <MoonIcon className="h-4 w-4" />
+                  Felt
+                </>
+              ) : (
+                <>
+                  <SunIcon className="h-4 w-4" />
+                  Day
+                </>
+              )}
             </button>
           </div>
         </div>
@@ -58,20 +70,24 @@ export default function AppHeader({ screen, theme, onToggleTheme, onNewGame, has
         {showProgress && (
           <div className="mt-4 flex flex-wrap items-center gap-3">
             <nav aria-label="Progress" className="hidden items-center gap-2 sm:flex">
-              {steps.map((step, index) => (
-                <span
-                  key={step.id}
-                  className={`rounded-full border px-3 py-1 text-xs font-medium tracking-wide ${
-                    index === activeIndex
-                      ? 'border-gold bg-gold/15 text-gold'
-                      : index < activeIndex
-                        ? 'border-line text-card/70'
-                        : 'border-line text-ink-soft'
-                  }`}
-                >
-                  {step.label}
-                </span>
-              ))}
+              {steps.map((step, index) => {
+                const Icon = step.icon;
+                return (
+                  <span
+                    key={step.id}
+                    className={`flex items-center gap-1 rounded-full border px-3 py-1 text-xs font-medium tracking-wide ${
+                      index === activeIndex
+                        ? 'border-gold bg-gold/15 text-gold'
+                        : index < activeIndex
+                          ? 'border-line text-card/70'
+                          : 'border-line text-ink-soft'
+                    }`}
+                  >
+                    <Icon className="h-3.5 w-3.5" />
+                    {step.label}
+                  </span>
+                );
+              })}
             </nav>
           </div>
         )}

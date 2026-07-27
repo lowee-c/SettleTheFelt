@@ -126,8 +126,16 @@ export default function App() {
       <footer className="no-print mx-auto max-w-3xl px-5 pb-10 text-center text-xs text-ink-soft sm:px-8">
         <p>Game data is saved automatically in your browser's cache.</p>
         <p className="mt-2 text-ink-soft/70">
-          Developed by <span className="font-medium text-card/80">lowee-c</span>
-        </p>
+            Developed by{' '}
+            <a
+              href="https://github.com/lowee-c"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-medium text-card/80 transition hover:text-gold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold"
+            >
+              lowee-c
+            </a>
+          </p>
       </footer>
 
       <ConfirmDialog

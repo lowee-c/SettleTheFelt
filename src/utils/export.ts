@@ -28,6 +28,10 @@ export function buildSettlementText(totals: PlayerTotals[], transfers: Transfer[
 }
 
 function csvEscape(value: string): string {
+  // Neutralize formula injection: prefix risky leading characters with a tab-safe apostrophe
+  if (/^[=+\-@]/.test(value)) {
+    value = `'${value}`;
+  }
   if (/[",\n]/.test(value)) {
     return `"${value.replace(/"/g, '""')}"`;
   }

@@ -3,7 +3,7 @@ import { formatCurrency } from '../utils/currency';
 import { getTotalBuyIn } from '../utils/settlement';
 import ChipBadge from './ChipBadge';
 import { colourForPlayer } from '../utils/playerColour';
-import { blockInvalidNumberKeys, roundToTwoDecimals } from '..//utils/inputGuards';
+import { blockInvalidNumberKeys, roundToTwoDecimals } from '../utils/inputGuards';
 import { blockExcessDecimals } from '../utils/inputGuards';
 
 interface PlayerRowProps {
@@ -15,6 +15,15 @@ interface PlayerRowProps {
   onChangeRebuy: (rebuyIndex: number, value: number) => void;
   onRemoveRebuy: (rebuyIndex: number) => void;
   onRemove: () => void;
+}
+
+const STEP = 5;
+const MAX = 10000000;
+
+function stepperButtonClass(side: 'left' | 'right') {
+  return `flex h-6 w-6 shrink-0 items-center justify-center rounded-md text-card/60 transition hover:bg-felt-deep hover:text-gold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-gold ${
+    side === 'left' ? '-ml-1' : '-mr-1'
+  }`;
 }
 
 export default function PlayerRow({
@@ -49,14 +58,22 @@ export default function PlayerRow({
           <div className="mt-3 flex flex-wrap items-end gap-3">
             <label className="flex flex-col gap-1">
               <span className="text-xs uppercase tracking-wide text-ink-soft">Buy-in</span>
-              <span className="flex items-center gap-1 rounded-lg border border-line bg-felt px-2 py-1.5">
+              <span className="flex items-center gap-1 rounded-lg border border-line bg-felt px-1.5 py-1.5">
+                <button
+                  type="button"
+                  onClick={() => onChangeBuyIn(Math.max(0, roundToTwoDecimals(player.buyIn - STEP)))}
+                  aria-label="Decrease buy-in"
+                  className={stepperButtonClass('left')}
+                >
+                  −
+                </button>
                 <span className="text-card/60">$</span>
                 <input
                   type="number"
                   inputMode="decimal"
                   min={0}
-                  max={10000000}
-                  step="5"
+                  max={MAX}
+                  step={STEP}
                   value={player.buyIn === 0 ? '' : player.buyIn}
                   onChange={(e) => onChangeBuyIn(Math.max(0, e.target.valueAsNumber || 0))}
                   onKeyDown={(e) => {
@@ -65,22 +82,38 @@ export default function PlayerRow({
                   }}
                   onBlur={() => onChangeBuyIn(roundToTwoDecimals(player.buyIn))}
                   placeholder="0.00"
-                  className="w-24 bg-transparent font-mono text-sm text-card placeholder:text-card/30 focus:outline-none"
+                  className="w-16 [appearance:textfield] bg-transparent text-center font-mono text-sm text-card placeholder:text-card/30 focus:outline-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
                 />
+                <button
+                  type="button"
+                  onClick={() => onChangeBuyIn(Math.min(MAX, roundToTwoDecimals(player.buyIn + STEP)))}
+                  aria-label="Increase buy-in"
+                  className={stepperButtonClass('right')}
+                >
+                  +
+                </button>
               </span>
             </label>
 
             {player.rebuys.map((rebuy, rIndex) => (
               <label key={rIndex} className="flex flex-col gap-1">
                 <span className="text-xs uppercase tracking-wide text-ink-soft">Rebuy {rIndex + 1}</span>
-                <span className="flex items-center gap-1 rounded-lg border border-line bg-felt px-2 py-1.5">
+                <span className="flex items-center gap-1 rounded-lg border border-line bg-felt px-1.5 py-1.5">
+                  <button
+                    type="button"
+                    onClick={() => onChangeRebuy(rIndex, Math.max(0, roundToTwoDecimals(rebuy - STEP)))}
+                    aria-label={`Decrease rebuy ${rIndex + 1}`}
+                    className={stepperButtonClass('left')}
+                  >
+                    −
+                  </button>
                   <span className="text-card/60">$</span>
                   <input
                     type="number"
                     inputMode="decimal"
                     min={0}
-                    max={10000000}
-                    step="5"
+                    max={MAX}
+                    step={STEP}
                     value={rebuy === 0 ? '' : rebuy}
                     onChange={(e) => onChangeRebuy(rIndex, Math.max(0, e.target.valueAsNumber || 0))}
                     onKeyDown={(e) => {
@@ -89,8 +122,16 @@ export default function PlayerRow({
                     }}
                     onBlur={() => onChangeRebuy(rIndex, roundToTwoDecimals(rebuy))}
                     placeholder="0.00"
-                    className="w-20 bg-transparent font-mono text-sm text-card placeholder:text-card/30 focus:outline-none"
+                    className="w-14 [appearance:textfield] bg-transparent text-center font-mono text-sm text-card placeholder:text-card/30 focus:outline-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
                   />
+                  <button
+                    type="button"
+                    onClick={() => onChangeRebuy(rIndex, Math.min(MAX, roundToTwoDecimals(rebuy + STEP)))}
+                    aria-label={`Increase rebuy ${rIndex + 1}`}
+                    className={stepperButtonClass('right')}
+                  >
+                    +
+                  </button>
                   <button
                     type="button"
                     onClick={() => onRemoveRebuy(rIndex)}
@@ -106,7 +147,7 @@ export default function PlayerRow({
             <button
               type="button"
               onClick={onAddRebuy}
-              className="rounded-full border border-dashed border-gold/60 px-3 py-1.5 text-xs font-medium text-gold transition hover:bg-gold/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold"
+              className="rounded-full border border-dashed border-gold/60 px-3 py-1.5 text-xs font-medium text-gold transition hover:border-gold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold"
             >
               + Rebuy
             </button>

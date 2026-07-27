@@ -20,18 +20,20 @@
 }
 
 [data-theme='day'] {
-  /* Day theme — a sunlit card-room: same cast, lighter room */
-  --felt: #e8ddc3;
-  --felt-deep: #dccfab;
-  --card: #fffdf8;
-  --ink: #241f16;
-  --ink-soft: #7a7362;
-  --gold: #a97a0e;
-  --gold-deep: #7a5808;
-  --win: #1f7a58;
-  --loss: #a83b2f;
-  --rail: #ceb98b;
-  --line: rgba(36, 31, 22, 0.12);
+  /* Day theme — a sunlit card-room: same cast, higher contrast */
+  --felt: #f1e6ca;
+  --felt-deep: #e2d2a4;
+  --card: #8a5a00;
+  --ink: #211b12;
+  --ink-soft: #59503f;
+  --gold: #8a5a00;
+  --gold-deep: #5c3b00;
+  --red: #c52d1d;
+  --dark-red: #220300;
+  --win: #146c46;
+  --loss: #97281a;
+  --rail: #c9ad78;
+  --line: rgba(33, 27, 18, 0.18);
 }
 
 html {
@@ -108,9 +110,9 @@ body {
 .btn-sparkle::after {
   content: '';
   position: absolute;
-  inset: -3px;
+  inset: -2px;
   border-radius: inherit;
-  border: 1px solid var(--gold);
+  border: 2px solid var(--gold);
   opacity: 0;
   pointer-events: none;
   animation: sparkle-pulse 6s ease-in-out infinite;

@@ -60,7 +60,7 @@ export default function PlayerSetupScreen({
         <button
           type="button"
           onClick={onAddPlayer}
-          className="rounded-full border border-gold/60 px-4 py-2 text-sm font-medium text-gold transition hover:bg-gold/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold"
+          className="rounded-full border border-gold/60 px-4 py-2 text-sm font-medium text-gold transition hover:border-gold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold"
         >
           + Add player
         </button>
