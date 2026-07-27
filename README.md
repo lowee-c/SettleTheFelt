@@ -4,14 +4,13 @@ A small, no-backend web app that settles a home poker game: track buy-ins and
 rebuys, enter cash-outs, and get back the **minimum number of payments**
 needed to even the table.
 
-Everything runs client-side. There's no server, no database, and no account —
-game data is kept in your browser's Local Storage so it survives a refresh,
-and never leaves your device.
+Everything runs client-side. There's no server, no database, and no account -
+game data is kept in your browser's cache so it survives a refresh.
 
 ## Features
 
 - Add/remove any number of players, edit names, buy-ins, and rebuys at any time
-- Each player gets a distinct, consistent chip-badge color, generated
+- Each player gets a distinct, consistent chip-badge colour, generated
   deterministically from their player ID so it stays the same across screens
 - Enter each player's final cash-out with quick-add buttons (+5¢, +10¢, +50¢,
   +$1) alongside manual entry, and get instant validation
@@ -32,7 +31,7 @@ and never leaves your device.
 - [React 19](https://react.dev/) + [TypeScript](https://www.typescriptlang.org/) (strict mode)
 - [Vite](https://vite.dev/) for tooling and bundling
 - [Tailwind CSS](https://tailwindcss.com/) for styling
-- No routing library, no state library, no backend — just React state
+- No routing library, no state library, no backend - just React state
   persisted to `localStorage`
 
 ## Getting started
@@ -159,7 +158,7 @@ src/
    negative net as debtors, both largest-first. The app repeatedly matches
    the biggest debtor to the biggest creditor for the largest amount both
    can cover, which produces a minimal (or near-minimal) set of transfers —
-   at most `players − 1` payments, often fewer.
+   at most `players - 1` payments, often fewer.
 
 All money is converted to integer cents internally before this math runs, to
 avoid floating-point rounding errors. This is also why the quick-add buttons
@@ -169,7 +168,3 @@ decimal dollars — repeated clicks land on exact amounts instead of drifting.
 ## Credits
 
 Developed by **lowee-c**.
-
-## License
-
-MIT — do whatever you'd like with it.
